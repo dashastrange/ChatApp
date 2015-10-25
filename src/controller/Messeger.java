@@ -1,3 +1,5 @@
+package controller;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -16,13 +18,14 @@ public class Messeger {
 			this.s = s;
 
 		try {
+			assert s != null;
 			in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-		} catch (IOException e) {
+		} catch (IOException ignored) {
 		}
 		try {
 			out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
 					s.getOutputStream())), true);
-		} catch (IOException e) {
+		} catch (IOException ignored) {
 		}
 
 	}
@@ -39,8 +42,8 @@ public class Messeger {
 				// //////////////// Запись в файл истории
 				// //////////////// Вывод в формочку
 			}
-			;
-		} catch (IOException e) {
+
+		} catch (IOException ignored) {
 		}
 
 	}
@@ -49,7 +52,7 @@ public class Messeger {
 		try {
 			String got = in.readLine();
 			out.println("SENDED");
-		} catch (IOException e) {
+		} catch (IOException ignored) {
 
 		}
 		System.out.println("ALL OK");
