@@ -53,6 +53,9 @@ public class Connection extends Thread {
 		} catch (IOException e) {
 		}
 	}
+	public void recieve(String mesa){
+		mes.Recieved(mesa);
+	}
 
 
 

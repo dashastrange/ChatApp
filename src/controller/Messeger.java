@@ -1,5 +1,3 @@
-package controller;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -12,52 +10,41 @@ public class Messeger {
 	Socket s;
 	BufferedReader in;
 	PrintWriter out;
+	boolean sended = false;
 
 	Messeger(Socket s) {
 		if (s != null)
 			this.s = s;
 
 		try {
-			assert s != null;
 			in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-		} catch (IOException ignored) {
+		} catch (IOException e) {
 		}
 		try {
 			out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
 					s.getOutputStream())), true);
-		} catch (IOException ignored) {
+		} catch (IOException e) {
 		}
 
 	}
 
 	public void Send(String mes) {
-		out.println("Message"); //////////////Р­С‚Рѕ РєРѕРјР°РЅРґР° РїСЂРѕС‚РѕРєРѕР»Р°, С‡С‚Рѕ РїСЂРёС€Р»Рѕ СЃРѕРѕР±С‰РµРЅРёРµ
+		out.println("Message"); // ////////////Это команда протокола, что пришло
+								// сообщение
 		out.println(mes);
 		out.flush();
-		try {
-			
-			String a = in.readLine();
-			if (a.endsWith("NDED")) {
-				System.out.println("ALL OK");
-				// //////////////// Р—Р°РїРёСЃСЊ РІ С„Р°Р№Р» РёСЃС‚РѕСЂРёРё
-				// //////////////// Р’С‹РІРѕРґ РІ С„РѕСЂРјРѕС‡РєСѓ
-			}
-
-		} catch (IOException ignored) {
-		}
-
+		if (sended = true) {
+		}// ////////////// Вывод в формочку
+			// ///////////// Запись в файл.
+		else {
+		}// ////////////// Сообщение не отправилось
+		
+		sended = false;
 	}
 
-	public void Recieved() {
-		try {
-			String got = in.readLine();
-			out.println("SENDED");
-		} catch (IOException ignored) {
-
-		}
-		System.out.println("ALL OK");
-		// ////////////// Р’С‹РІРѕРґ РІ С„РѕСЂРјРѕС‡РєСѓ
-		// ///////////// Р—Р°РїРёСЃСЊ РІ С„Р°Р№Р».
+	public void Recieved(String mes) {
+		System.out.println("message:"+mes);
+		// out.println("SENDED");
 	}
 
 }

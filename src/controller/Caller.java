@@ -1,5 +1,3 @@
-package controller;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -7,7 +5,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class Caller {
 	public String YourName;
@@ -31,18 +31,18 @@ public class Caller {
 	public Socket Connector() throws IOException {
 		try {
 			 socket = new Socket("127.1.0.1", port);
-		} catch (IOException ignored) {
-
+		} catch (IOException e1) {
+		
 		}
 		try {
 			in = new BufferedReader(new InputStreamReader(
 					socket.getInputStream()));
-		} catch (IOException ignored) {
+		} catch (IOException e) {
 		}
 		try {
 			out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
 					socket.getOutputStream())), true);
-		} catch (IOException ignored) {
+		} catch (IOException e) {
 		}
 
 		try {
@@ -69,13 +69,13 @@ public class Caller {
 			out.println("Hello "+FriendName);
 			out.flush();
 		}
-		catch (Exception ignored){
+		catch (Exception e){
 			
 		}
 		try {
 			str=in.readLine();
 	
-		} catch (IOException ignored) {
+		} catch (IOException e) {
 		
 		}
 		if (str.startsWith("He")) {
