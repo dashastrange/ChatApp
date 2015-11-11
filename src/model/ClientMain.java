@@ -1,8 +1,11 @@
 package model;
 
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Scanner;
+import java.util.Scanner;
 
 public class ClientMain {
 
@@ -10,15 +13,31 @@ public class ClientMain {
 		String YourName1 = "Client";
 		int port1 = 28411;
 		Connection con = null;
-
-		InetAddress addr = InetAddress.getByName("127.1.0.1");
+		int answer = -1;
+		String messe;
+		Scanner in = new Scanner(System.in);
+		InetAddress addr = InetAddress.getByName("192.168.0.0");
 		Caller c = new Caller(addr, port1, YourName1);
 		try {
-			 con = new Connection(c.Connector());
+			con = new Connection(c.Connector());
 		} catch (IOException e) {
 		}
-	     con.mes.Send("Hello");
-	     con.Accepted();
+		while (answer != 5) {
+			answer = in.nextInt();
+			messe= in.nextLine();
+			if (answer==1) {
+			messe=in.nextLine();
+			con.SendMessage(messe);
+			}
+			if (answer==2)
+			con.Accepted();
+			if (answer==3)
+			con.SendNickBusy(YourName1);
+			if (answer==4)
+			con.Rejected();
+			if (answer==5)
+			con.disconnect();
+		}
 
 	}
 }
