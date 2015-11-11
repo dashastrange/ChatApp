@@ -4,25 +4,29 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Login extends JFrame {
+    static JFrame frame;
+    static JLabel nicknameLabel;
+    static JLabel IPLabel;
+    static JButton ConnectButton;
+    static JTextField nicknameTextField;
+    static JTextField IPField;
+    static JButton StartConversation;
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Login");
+        frame = new JFrame("Login");
         frame.setSize(new Dimension(300, 100));
         frame.setVisible(true);
         frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
-
         frame.setLayout(new GridBagLayout());
-        JLabel nicknameLabel = new JLabel("Enter your nick: ");
-        JLabel IPLabel = new JLabel("Enter friend's IP: ");
-        JButton ConnectButton = new JButton("Connect");
-        JTextField nicknameTextField = new JTextField(15);
-        nicknameTextField.setText("Daria");
-        JTextField IPField = new JTextField(15);
-        IPField.setText("14.88");
-        JButton StartConversation = new JButton("Start conversation");
+        nicknameLabel = new JLabel("Enter your nick: ");
+        IPLabel = new JLabel("Enter friend's IP: ");
+        ConnectButton = new JButton("Connect");
+        nicknameTextField = new JTextField(15);
+        IPField = new JTextField(15);
+        StartConversation = new JButton("Start conversation");
 
         frame.add(nicknameLabel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.9, GridBagConstraints.NORTH,
                 GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
@@ -39,6 +43,7 @@ public class Login extends JFrame {
 
 
         frame.pack();
-    }
 
+        ConnectButton.addActionListener(e -> System.out.println("Not ready"));
+    }
 }
