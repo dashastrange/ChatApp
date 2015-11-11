@@ -1,10 +1,18 @@
 package model;
 
+import java.io.IOException;
+
+
 public class Servermain {
 
 	public static void main(String[] args) {
-		CallListener serv=new CallListener();
-		MessageReciever con = new MessageReciever(serv.WaitForConnection());
+		MessageReciever con;
+		CallListenerThread serv=new CallListenerThread();
+		serv.starte();
+		while (serv.getSocket()==null){}
+		System.out.println("Hello")	;
+	    con = new MessageReciever(serv.getSocket());
+		
 	}
 
 }
