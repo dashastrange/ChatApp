@@ -6,7 +6,7 @@ import java.awt.event.*;
 
 class Chatbox extends JFrame
 {
-    JPanel jp;
+    JPanel main;
     JTextField jt;
     JTextArea ta;
     JLabel l;
@@ -23,15 +23,14 @@ class Chatbox extends JFrame
         setTitle("Chatbox");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        jp=new JPanel();
-        jp.setLayout(new GridLayout(2,1));
-        l=new JLabel();
-        jp.add(l);
+        main = new JPanel();
+        main.setLayout(new GridLayout(2,1));
+        l = new JLabel();
+        main.add(l);
 
-        t=new Timer(1,new ActionListener(){
+        t = new Timer(1,new ActionListener(){
             public void actionPerformed(ActionEvent ae)
             {
-                // If the user isn't typing, he is thinking
                 if(!typing)
                     l.setText("Thinking..");
             }
@@ -40,14 +39,14 @@ class Chatbox extends JFrame
         t.setInitialDelay(2000);
 
         jt=new JTextField();
-        jp.add(jt);
+        main.add(jt);
 
-        add(jp,BorderLayout.SOUTH);
+        add(main,BorderLayout.SOUTH);
 
         jt.addKeyListener(new KeyAdapter(){
             public void keyPressed(KeyEvent ke)
             {
-                l.setText("You are typing..");
+                l.setText("Typing..");
                 t.stop();
                 typing=true;
 
@@ -84,7 +83,9 @@ class Chatbox extends JFrame
 
     private void showLabel(String text)
     {
-        if(text.trim().isEmpty()) return;
+        if(text.trim().isEmpty()) {
+            return;
+        }
 
         ta.append(text+"\n");
         jt.setText("");
