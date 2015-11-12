@@ -1,104 +1,147 @@
+
 package view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-class Chatbox extends JFrame
-{
-    JPanel main;
-    JTextField jt;
-    JTextArea ta;
-    JLabel l;
-    boolean typing;
-    Timer t;
+public class Chatbox {
 
-    public Chatbox()
-    {
-        createAndShowGUI();
+    Chatbox mainGUI;
+    JFrame newFrame = new JFrame("Chat v0.1");
+    JButton sendMessage;
+    JTextField messageBox;
+    JTextArea chatBox;
+    JTextField usernameChooser;
+    JFrame preFrame;
+    JTextField IPFriend;
+
+    public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Chatbox mainGUI = new Chatbox();
+        mainGUI.preDisplay();
     }
 
-    private void createAndShowGUI()
-    {
-        setTitle("Chatbox");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        main = new JPanel();
-        main.setLayout(new GridLayout(2,1));
-        l = new JLabel();
-        main.add(l);
+    public void preDisplay() {
+        newFrame.setVisible(false);
+        preFrame = new JFrame("Choose your username!(chat v0.1");
+        preFrame.setLocationRelativeTo(null);
+        usernameChooser = new JTextField(30);
+        IPFriend = new JTextField(30);
+        JLabel chooseUsernameLabel = new JLabel("Pick a username:");
+        JLabel EnterIP = new JLabel("Enter IP:");
+        JButton enterServer = new JButton("Enter Chat Server");
+        JButton ApplyName = new JButton("Apply");
 
-        t = new Timer(1,new ActionListener(){
-            public void actionPerformed(ActionEvent ae)
-            {
-                if(!typing)
-                    l.setText("Thinking..");
-            }
-        });
+        JPanel prePanel = new JPanel(new GridBagLayout());
 
-        t.setInitialDelay(2000);
+        GridBagConstraints preRight = new GridBagConstraints();
+        preRight.anchor = GridBagConstraints.EAST;
+        GridBagConstraints preLeft = new GridBagConstraints();
+        preLeft.anchor = GridBagConstraints.WEST;
+        preRight.weightx = 2.0;
+        preRight.fill = GridBagConstraints.HORIZONTAL;
+        preRight.gridwidth = GridBagConstraints.REMAINDER;
 
-        jt=new JTextField();
-        main.add(jt);
+        prePanel.add(chooseUsernameLabel, preLeft);
+        prePanel.add(usernameChooser, preRight);
+        prePanel.add(EnterIP, preLeft);
+        prePanel.add(IPFriend, preRight);
 
-        add(main,BorderLayout.SOUTH);
 
-        jt.addKeyListener(new KeyAdapter(){
-            public void keyPressed(KeyEvent ke)
-            {
-                l.setText("Typing..");
-                t.stop();
-                typing=true;
+        preFrame.add(BorderLayout.CENTER, prePanel);
+        preFrame.add(BorderLayout.SOUTH, enterServer);
+        preFrame.add(BorderLayout.EAST, ApplyName);
 
-                if(ke.getKeyCode()==KeyEvent.VK_ENTER) showLabel(jt.getText());
-            }
+        preFrame.setVisible(true);
+        preFrame.setResizable(false);
+        preFrame.setSize(300, 300);
 
-            public void keyReleased(KeyEvent ke)
-            {
-                typing=false;
+        preFrame.pack();
 
-                if(!t.isRunning())
-
-                    t.start();
-            }
-        });
-
-        ta=new JTextArea();
-        ta.setEditable(false);
-        ta.setMargin(new Insets(7,7,7,7));
-        JScrollPane js=new JScrollPane(ta);
-        add(js);
-
-        addWindowListener(new WindowAdapter(){
-            public void windowOpened(WindowEvent we)
-            {
-                jt.requestFocus();
-            }
-        });
-
-        setSize(400,400);
-        setLocationRelativeTo(null);
-        setVisible(true);
+        enterServer.addActionListener(new enterServerButtonListener());
     }
 
-    private void showLabel(String text)
-    {
-        if(text.trim().isEmpty()) {
-            return;
+    public void display() {
+        newFrame.setVisible(true);
+        JPanel southPanel = new JPanel();
+        newFrame.add(BorderLayout.SOUTH, southPanel);
+        southPanel.setLayout(new GridBagLayout());
+
+        messageBox = new JTextField(30);
+        sendMessage = new JButton("Send Message");
+        chatBox = new JTextArea();
+        chatBox.setEditable(false);
+        newFrame.add(new JScrollPane(chatBox), BorderLayout.CENTER);
+
+        chatBox.setLineWrap(true);
+
+        GridBagConstraints left = new GridBagConstraints();
+        left.anchor = GridBagConstraints.WEST;
+        GridBagConstraints right = new GridBagConstraints();
+        right.anchor = GridBagConstraints.EAST;
+        right.weightx = 2.0;
+
+        southPanel.add(messageBox, left);
+        southPanel.add(sendMessage, right);
+
+        chatBox.setFont(new Font("Serif", Font.PLAIN, 15));
+        sendMessage.addActionListener(new sendMessageButtonListener());
+        newFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        newFrame.setSize(470, 300);
+        newFrame.setLocationRelativeTo(null);
+    }
+
+    class sendMessageButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            if (messageBox.getText().length() < 1) {
+                // do nothing
+            } else if (messageBox.getText().equals(".clear")) {
+                chatBox.setText("Cleared all messages\n");
+                messageBox.setText("");
+            } else {
+                chatBox.append("<" + username + ">:  " + messageBox.getText() + "\n");
+                messageBox.setText("");
+            }
+        }
+    }
+
+    String username;
+    String ip;
+
+    class enterServerButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            username = usernameChooser.getText();
+            ip = IPFriend.getText();
+            if (username.length() < 1) {
+                System.err.println("No!");
+            } else if (ip.length() < 1) {
+                System.err.println("No!");
+            } else {
+                preFrame.setVisible(false);
+                display();
+            }
         }
 
-        ta.append(text+"\n");
-        jt.setText("");
-        l.setText("");
     }
 
-    public static void main(String args[])
-    {
-        SwingUtilities.invokeLater(new Runnable(){
-            public void run()
-            {
-                new Chatbox();
+    class ApplyListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            username = usernameChooser.getText();
+            if (username.length() > 3 && ip.length() > 6) {
+                System.out.println("OK");
+                display();
+            } else {
+                System.out.println("Choose another name or IP");
             }
-        });
+
+        }
     }
+
 }
