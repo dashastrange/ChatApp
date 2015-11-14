@@ -20,6 +20,7 @@ public class CallListener {
 	BufferedReader in;
 	PrintWriter out;
 	String str;
+	MessageReciever mr;
 
 	CallListener() {
 		try {
@@ -36,6 +37,7 @@ public class CallListener {
 	public Socket WaitForConnection() {
 		System.out.println("waiting for a client");
 		try {
+
 			socket = s.accept();
 		} catch (IOException e) {
 
@@ -51,21 +53,21 @@ public class CallListener {
 		} catch (IOException e) {
 		}
 		System.out.println("got client");
-		if (isOK == false) {
+		if (mr != null)
+			if (mr.socket == null)
+				isOK = true;
+		if  (isOK == false) {
 			out.println("Busy");
 
 			return null;
 		} else {
-			try {
+			isOK = true;
+			out.println(YourName);
+			out.flush();
+			System.out.println(isOK);
 
-				out.println(YourName);
-				out.flush();
+			try {
 				FriendName = in.readLine();
-
-			} catch (IOException e1) {
-
-			}
-			try {
 				str = in.readLine();
 
 			} catch (IOException e) {
@@ -75,7 +77,6 @@ public class CallListener {
 
 				out.println("Hello " + FriendName);
 				out.flush();
-				isOK = false;
 				System.out.println(true);
 				return socket;
 			} else {

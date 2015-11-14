@@ -49,6 +49,7 @@ public class Connection extends Thread {
 	}
 	public void disconnect(){
 		try {
+			out.println("Disconnect");
 			s.close();
 		} catch (IOException e) {
 		}

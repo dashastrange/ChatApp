@@ -51,7 +51,7 @@ public class Caller {
 		} catch (IOException e) {
 			System.out.println("33333");
 		}
-		if (FriendName.startsWith("NO")) {
+        if (FriendName.startsWith("Bus")) {
 			
 			System.out.println("false");
 			return null;

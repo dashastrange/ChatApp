@@ -42,8 +42,10 @@ public class MessageReciever extends Thread {
 					}
 					
 					else if (a == 2) {
-						connect.disconnect();
 						System.out.println("Disconnect");
+						connect.disconnect();
+						socket=null;
+						isNeed=false;
 					} else if (a == 3) {
 						System.out.println("Accepted");
 					} // accepted;
