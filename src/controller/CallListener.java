@@ -52,7 +52,7 @@ public class CallListener {
 		}
 		System.out.println("got client");
 		if (isOK == false) {
-			out.println("NO");
+			out.println("Busy");
 
 			return null;
 		} else {

@@ -33,7 +33,7 @@ public class MessageReciever extends Thread {
 			String command;
 			try {
 				command = in.readLine();
-				//System.out.println(command);
+				System.out.println(command);
 				if (command != null) {
 					int a = prot.whichone(command);
 					if (a == 1){
@@ -43,15 +43,15 @@ public class MessageReciever extends Thread {
 					
 					else if (a == 2) {
 						connect.disconnect();
-						System.out.println("disconnect");
+						System.out.println("Disconnect");
 					} else if (a == 3) {
-						System.out.println("accepted");
+						System.out.println("Accepted");
 					} // accepted;
 					else if (a == 4) {
-						System.out.println("rejected");
+						System.out.println("Rejected");
 					} // rejected
 					else if (a == 5) {
-						System.out.println("busy");
+						System.out.println("Busy");
 					} else if (a == 0) {
 						System.out.println("UnknownCommand");
 					}
