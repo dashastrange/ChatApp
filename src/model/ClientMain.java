@@ -1,3 +1,5 @@
+package model;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -18,26 +20,26 @@ public class ClientMain {
 		try {
 			con = new Connection(c.Connector());
 		} catch (NullPointerException | IOException e) {
-			
+
 		}
 		if (con==null) System.out.println("Busy");
 		else
-		while (answer != 5) {
-			answer = in.nextInt();
-			messe= in.nextLine();
-			if (answer==1) {
-			messe=in.nextLine();
-			con.SendMessage(messe);
+			while (answer != 5) {
+				answer = in.nextInt();
+				messe= in.nextLine();
+				if (answer==1) {
+					messe=in.nextLine();
+					con.SendMessage(messe);
+				}
+				if (answer==2)
+					con.Accepted();
+				if (answer==3)
+					con.SendNickBusy(YourName1);
+				if (answer==4)
+					con.Rejected();
+				if (answer==5)
+					con.disconnect();
 			}
-			if (answer==2)
-			con.Accepted();
-			if (answer==3)
-			con.SendNickBusy(YourName1);
-			if (answer==4)
-			con.Rejected();
-			if (answer==5)
-			con.disconnect();
-		}
 
 	}
 }

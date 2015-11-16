@@ -96,6 +96,8 @@ public class Chatbox {
         newFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         newFrame.setSize(470, 300);
         newFrame.setLocationRelativeTo(null);
+
+        incomingcalling(); //demo version
     }
 
     class sendMessageButtonListener implements ActionListener {
@@ -142,6 +144,28 @@ public class Chatbox {
             }
 
         }
+    }
+
+    public static void incomingcalling() {
+
+        JFrame in_call = new JFrame("Incoming connection");
+        JButton no = new JButton("Reject");
+        JButton yes = new JButton("Acccept");
+        JLabel call = new JLabel("Someone wants to talk! What do you want to do?");
+
+        in_call.setVisible(true);
+        in_call.setSize(new Dimension(300, 90));
+        in_call.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE); //закрыл и пиши себе дальше. НО не равносильно reject'y
+        in_call.setLocationRelativeTo(null);
+        in_call.setLayout(new BorderLayout());
+        in_call.setResizable(false);
+
+        in_call.add(call, BorderLayout.NORTH);
+        in_call.add(no, BorderLayout.SOUTH);
+        in_call.add(yes, BorderLayout.CENTER);
+
+        no.setForeground(Color.red);
+        yes.setForeground(Color.GREEN);
     }
 
 }

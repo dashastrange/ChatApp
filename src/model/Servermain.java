@@ -1,4 +1,4 @@
-import java.io.IOException;
+package model;
 
 
 public class Servermain {
