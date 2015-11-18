@@ -10,8 +10,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class CallListener {
-	public String YourName = "Server";
-	public String FriendName;
+	public String YourName = "Unnamed";
+	public String FriendName = "Unnamed";
 	public boolean isOK = true;
 	public int port = 28412;
 	InetAddress ip;

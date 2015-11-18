@@ -6,11 +6,11 @@ public class CallListenerThread extends Thread {
 	int a = 0;
 	boolean isSearch = true;
 	Socket socket1 = null;
-	Chatbox chatBox=new Chatbox();
+	Chatbox chatBox = new Chatbox();
 	Chatbox notmy;
 
 	CallListenerThread(Chatbox x) {
-		notmy=x;
+		notmy = x;
 		t = new Thread(this);
 		cl = new CallListener();
 		t.start();
@@ -18,6 +18,14 @@ public class CallListenerThread extends Thread {
 
 	public void run() {
 		while (isSearch == true) {
+		    while(notmy.username=="Unnamed"){
+		    	try {
+					t.sleep(300);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+		    }
+			cl.YourName=notmy.username;
 			socket1 = cl.WaitForConnection();
 			if (cl.mr != null) {
 				if (cl.mr.isNeed = false)
@@ -25,16 +33,19 @@ public class CallListenerThread extends Thread {
 			}
 			if (cl.isOK == true) {
 				chatBox.incomingConnection();
+				while (chatBox.ch == 0) {
 					try {
-						t.sleep(7000);
+						t.sleep(400);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-				if (chatBox.ch==1){ 
-				notmy.closeAll();
-				chatBox.whenCalled();
-				chatBox.mr=new MessageReciever(cl.socket,chatBox.chatBox);
-				cl.isOK = false;
+				}
+				if (chatBox.ch == 1) {
+					notmy.closeAll();
+					chatBox.username=notmy.username;
+					chatBox.whenCalled();
+					chatBox.mr = new MessageReciever(cl.socket,chatBox.chatBox,cl.FriendName);
+					cl.isOK = false;
 				}
 			}
 		}

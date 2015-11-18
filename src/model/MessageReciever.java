@@ -16,20 +16,25 @@ public class MessageReciever extends Thread {
 	Protocol prot = new Protocol();
 	Thread t;
 	JTextArea chat;
+	String nick;
 
-	MessageReciever(Socket s,JTextArea chat) {
+
+
+	public MessageReciever(Socket socket2, JTextArea chatBox, String friendName) {
 		t = new Thread(this);
-		this.chat=chat;
-		if (s != null)
-			this.socket = s;
+		this.nick=friendName;
+		this.chat=chatBox;
+		if (socket2 != null)
+			this.socket = socket2;
 		try {
-			in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+			in = new BufferedReader(new InputStreamReader(socket2.getInputStream()));
 		} catch (IOException e) {
 			System.out.println("111");
 		}
 		connect = new Connection(socket);
 		t.start();
 	}
+
 
 	public void run() {
 		while (isNeed == true) {
@@ -44,7 +49,7 @@ public class MessageReciever extends Thread {
 						String mes=in.readLine();
 						connect.recieve(mes);
 						if (chat==null) System.out.println("HELLO");
-						chat.append("< Me >:  " + mes + "\n");
+						chat.append("< "+nick+" >:  " + mes + "\n");
 					}
 					
 					else if (a == 2) {
