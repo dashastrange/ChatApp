@@ -1,50 +1,48 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+package model;
+
+
+import java.io.*;
 import java.net.Socket;
 
 public class Messeger {
-	Socket s;
-	BufferedReader in;
-	PrintWriter out;
-	boolean sended = false;
+    Socket s;
+    BufferedReader in;
+    PrintWriter out;
+    boolean sended = false;
 
-	Messeger(Socket s) {
-		if (s != null)
-			this.s = s;
+    Messeger(Socket s) {
+        if (s != null)
+            this.s = s;
 
-		try {
-			in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-		} catch (IOException e) {
-		}
-		try {
-			out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-					s.getOutputStream())), true);
-		} catch (IOException e) {
-		}
+        try {
+            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+        } catch (IOException e) {
+        }
+        try {
+            out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
+                    s.getOutputStream())), true);
+        } catch (IOException e) {
+        }
 
-	}
+    }
 
-	public void Send(String mes) {
-		out.println("Message"); // ////////////Это команда протокола, что пришло
-								// сообщение
-		out.println(mes);
-		out.flush();
-		if (sended = true) {
-		}// ////////////// Вывод в формочку
-			// ///////////// Запись в файл.
-		else {
-		}// ////////////// Сообщение не отправилось
-		
-		sended = false;
-	}
+    public void Send(String mes) {
+        out.println("Message"); // ////////////пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        out.println(mes);
+        out.flush();
+        if (sended = true) {
+        }// ////////////// пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        // ///////////// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ.
+        else {
+        }// ////////////// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-	public void Recieved(String mes) {
-		System.out.println("message:"+mes);
-		// out.println("SENDED");
-	}
+        sended = false;
+    }
+
+    public void Recieved(String mes) {
+        System.out.println("message:" + mes);
+        // out.println("SENDED");
+    }
 
 }
