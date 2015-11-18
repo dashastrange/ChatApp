@@ -1,5 +1,3 @@
-package model;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -8,6 +6,8 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import javax.swing.JTextArea;
+
 public class MessageReciever extends Thread {
 	Socket socket;
 	Connection connect;
@@ -15,9 +15,11 @@ public class MessageReciever extends Thread {
 	boolean isNeed = true;
 	Protocol prot = new Protocol();
 	Thread t;
+	JTextArea chat;
 
-	MessageReciever(Socket s) {
+	MessageReciever(Socket s,JTextArea chat) {
 		t = new Thread(this);
+		this.chat=chat;
 		if (s != null)
 			this.socket = s;
 		try {
@@ -41,6 +43,8 @@ public class MessageReciever extends Thread {
 					if (a == 1){
 						String mes=in.readLine();
 						connect.recieve(mes);
+						if (chat==null) System.out.println("HELLO");
+						chat.append("< Me >:  " + mes + "\n");
 					}
 					
 					else if (a == 2) {

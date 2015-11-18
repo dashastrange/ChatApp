@@ -1,5 +1,3 @@
-package model;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -47,6 +45,7 @@ public class Connection extends Thread {
 		out.println("Rejected");
 	}
 	public void SendMessage (String Message){
+		System.out.println("SENDING"+" "+Message);
 		mes.Send(Message);
 	}
 	public void disconnect(){

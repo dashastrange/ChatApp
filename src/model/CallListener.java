@@ -1,5 +1,3 @@
-package model;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -15,7 +13,7 @@ public class CallListener {
 	public String YourName = "Server";
 	public String FriendName;
 	public boolean isOK = true;
-	public int port = 28411;
+	public int port = 28412;
 	InetAddress ip;
 	ServerSocket s;
 	Socket socket;
