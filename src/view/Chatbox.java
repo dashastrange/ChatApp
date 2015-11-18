@@ -1,7 +1,4 @@
-package view;
 
-import model.Caller;
-import model.MessageReciever;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +9,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 public class Chatbox {
-
     Chatbox mainGUI;
     JFrame newFrame = new JFrame("Chat v0.1");
     JButton sendMessage;
@@ -169,6 +165,7 @@ public class Chatbox {
         southPanel.add(off, right);
 
         chatBox.setFont(new Font("Serif", Font.PLAIN, 15));
+        off.addActionListener(new offButtonListener());
         sendMessage.addActionListener(new sendMessageButtonListener());
         newFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         newFrame.setSize(470, 300);
@@ -200,6 +197,15 @@ public class Chatbox {
                 }
             }
         }
+    }
+    
+    class offButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            closeAll();
+            preDisplay();
+            mr.connect.disconnect();
+        }
+
     }
 
     class enterNickButtonListener implements ActionListener {

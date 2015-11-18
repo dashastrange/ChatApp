@@ -1,6 +1,7 @@
-package model;
+
 
 import javax.swing.*;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,16 +14,34 @@ public class MessageReciever extends Thread {
     boolean isNeed = true;
     Protocol prot = new Protocol();
     Thread t;
-    JTextArea chat;
+    Chatbox chatn;
+    JTextArea n;
     String nick;
 
 
-    public MessageReciever(Socket socket2, JTextArea chatBox, String friendName) {
+    public MessageReciever(Socket socket2, Chatbox chatBox, String friendName) {
         t = new Thread(this);
         this.nick = friendName;
-        this.chat = chatBox;
+        chatn = chatBox;
+        n=chatn.chatBox;
         if (socket2 != null)
             this.socket = socket2;
+        try {
+            in = new BufferedReader(new InputStreamReader(socket2.getInputStream()));
+        } catch (IOException e) {
+            System.out.println("111");
+        }
+        connect = new Connection(socket);
+        t.start();
+    }
+    
+    public MessageReciever(Socket socket2, JTextArea chatBox , String friendName) {
+        t = new Thread(this);
+        this.nick = friendName;
+        n=chatBox;
+        if (socket2 != null)
+            this.socket = socket2;
+        if (socket2 == null) System.out.println("SOCKET NULL");
         try {
             in = new BufferedReader(new InputStreamReader(socket2.getInputStream()));
         } catch (IOException e) {
@@ -45,10 +64,12 @@ public class MessageReciever extends Thread {
                     if (a == 1) {
                         String mes = in.readLine();
                         connect.recieve(mes);
-                        if (chat == null) System.out.println("HELLO");
-                        chat.append("< " + nick + " >:  " + mes + "\n");
+                        if (n == null) System.out.println("HELLO");
+                       n.append("< " + nick + " >:  " + mes + "\n");
                     } else if (a == 2) {
                         System.out.println("Disconnect");
+                        chatn.closeAll();
+                        chatn.preDisplay();
                         connect.disconnect();
                         socket = null;
                         isNeed = false;

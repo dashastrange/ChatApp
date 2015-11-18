@@ -1,4 +1,3 @@
-package model;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -27,7 +26,7 @@ public class Caller {
         try {
             socket = new Socket("127.1.0.1", port);
         } catch (IOException e1) {
-
+System.out.println("HELLO");
         }
         try {
             in = new BufferedReader(new InputStreamReader(

@@ -1,4 +1,4 @@
-package model;
+
 
 import java.io.*;
 import java.net.InetAddress;
@@ -11,6 +11,7 @@ public class CallListener {
     public String FriendName = "Unnamed";
     public boolean isOK = true;
     public int port = 28412;
+ 
     InetAddress ip;
     ServerSocket s;
     Socket socket;

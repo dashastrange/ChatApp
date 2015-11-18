@@ -1,6 +1,5 @@
-package model;
 
-import view.Chatbox;
+
 
 import java.net.Socket;
 
@@ -48,7 +47,7 @@ public class CallListenerThread extends Thread {
                     notmy.closeAll();
                     chatBox.username = notmy.username;
                     chatBox.whenCalled();
-                    chatBox.mr = new MessageReciever(cl.socket, chatBox.chatBox, cl.FriendName);
+                    chatBox.mr = new MessageReciever(cl.socket, chatBox, cl.FriendName);
                     cl.isOK = false;
                 }
             }
