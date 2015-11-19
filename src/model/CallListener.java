@@ -1,4 +1,4 @@
-
+package model;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -10,8 +10,8 @@ public class CallListener {
     public String YourName = "Unnamed";
     public String FriendName = "Unnamed";
     public boolean isOK = true;
-    public int port = 28412;
- 
+    public int port = 28411;
+
     InetAddress ip;
     ServerSocket s;
     Socket socket;
@@ -54,7 +54,7 @@ public class CallListener {
         if (mr != null)
             if (mr.socket == null)
                 isOK = true;
-        if (isOK == false) {
+        if (!isOK) {
             out.println("Busy");
 
             return null;

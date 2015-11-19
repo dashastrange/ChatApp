@@ -1,4 +1,9 @@
+package view;
 
+import model.Caller;
+import model.MessageReciever;
+import sun.util.calendar.BaseCalendar;
+import sun.util.calendar.Gregorian;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,6 +12,9 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.Time;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Chatbox {
     Chatbox mainGUI;
@@ -151,7 +159,9 @@ public class Chatbox {
         chatBox = new JTextArea();
         newFrame.add(new JScrollPane(chatBox), BorderLayout.CENTER);
 
-        chatBox.setLineWrap(true);
+        //chatBox.setLineWrap(false);
+        chatBox.setMargin(new Insets(7, 7, 7, 7));
+        chatBox.setAutoscrolls(true);
 
         GridBagConstraints left = new GridBagConstraints();
         left.anchor = GridBagConstraints.WEST;
@@ -162,7 +172,7 @@ public class Chatbox {
         chatBox.setEditable(false);
         southPanel.add(messageBox, left);
         southPanel.add(sendMessage, right);
-        southPanel.add(off, right);
+        southPanel.add(off, left);
 
         chatBox.setFont(new Font("Serif", Font.PLAIN, 15));
         off.addActionListener(new offButtonListener());
@@ -180,9 +190,10 @@ public class Chatbox {
                 chatBox.setText("Cleared all messages\n");
                 messageBox.setText("");
             } else {
+                GregorianCalendar d = new GregorianCalendar();
                 String mes = messageBox.getText();
                 System.out.println(mes);
-                chatBox.append("<" + username + ">:  " + mes + "\n");
+                chatBox.append(d.getTime() + "<" + username + ">:  " + mes + "\n"); //date and time
                 messageBox.setText("");
                 if (mr == null)
                     System.out.println("mr nil");
@@ -198,7 +209,7 @@ public class Chatbox {
             }
         }
     }
-    
+
     class offButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             closeAll();

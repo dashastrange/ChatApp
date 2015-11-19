@@ -1,7 +1,8 @@
+package model;
 
+import view.Chatbox;
 
 import javax.swing.*;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,7 +24,7 @@ public class MessageReciever extends Thread {
         t = new Thread(this);
         this.nick = friendName;
         chatn = chatBox;
-        n=chatn.chatBox;
+        n = chatn.chatBox;
         if (socket2 != null)
             this.socket = socket2;
         try {
@@ -34,11 +35,11 @@ public class MessageReciever extends Thread {
         connect = new Connection(socket);
         t.start();
     }
-    
-    public MessageReciever(Socket socket2, JTextArea chatBox , String friendName) {
+
+    public MessageReciever(Socket socket2, JTextArea chatBox, String friendName) {
         t = new Thread(this);
         this.nick = friendName;
-        n=chatBox;
+        n = chatBox;
         if (socket2 != null)
             this.socket = socket2;
         if (socket2 == null) System.out.println("SOCKET NULL");
@@ -53,7 +54,7 @@ public class MessageReciever extends Thread {
 
 
     public void run() {
-        while (isNeed == true) {
+        while (isNeed) {
 
             String command;
             try {
@@ -65,7 +66,7 @@ public class MessageReciever extends Thread {
                         String mes = in.readLine();
                         connect.recieve(mes);
                         if (n == null) System.out.println("HELLO");
-                       n.append("< " + nick + " >:  " + mes + "\n");
+                        n.append("< " + nick + " >:  " + mes + "\n");
                     } else if (a == 2) {
                         System.out.println("Disconnect");
                         chatn.closeAll();

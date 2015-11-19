@@ -1,5 +1,6 @@
+package model;
 
-
+import view.Chatbox;
 
 import java.net.Socket;
 

@@ -1,5 +1,4 @@
-
-
+package model;
 
 import java.io.*;
 import java.net.Socket;
@@ -27,15 +26,13 @@ public class Messeger {
     }
 
     public void Send(String mes) {
-        out.println("Message"); // ////////////��� ������� ���������, ��� ������
-        // ���������
+        out.println("Message");
         out.println(mes);
         out.flush();
-        if (sended = true) {
-        }// ////////////// ����� � ��������
-        // ///////////// ������ � ����.
-        else {
-        }// ////////////// ��������� �� �����������
+        if (sended = true) {//add symbol of line ending and message ending
+        }
+        else {//only one line is sending
+        }
 
         sended = false;
     }

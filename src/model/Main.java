@@ -1,4 +1,6 @@
+package model;
 
+import view.Chatbox;
 
 public class Main {
 
