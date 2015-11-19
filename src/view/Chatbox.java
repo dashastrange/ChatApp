@@ -2,18 +2,13 @@ package view;
 
 import model.Caller;
 import model.MessageReciever;
-import sun.util.calendar.BaseCalendar;
-import sun.util.calendar.Gregorian;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.sql.Time;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class Chatbox {
@@ -159,7 +154,7 @@ public class Chatbox {
         chatBox = new JTextArea();
         newFrame.add(new JScrollPane(chatBox), BorderLayout.CENTER);
 
-        //chatBox.setLineWrap(false);
+        chatBox.setLineWrap(false);
         chatBox.setMargin(new Insets(7, 7, 7, 7));
         chatBox.setAutoscrolls(true);
 
@@ -174,12 +169,25 @@ public class Chatbox {
         southPanel.add(sendMessage, right);
         southPanel.add(off, left);
 
-        chatBox.setFont(new Font("Serif", Font.PLAIN, 15));
+        chatBox.setFont(new Font("Serif", Font.PLAIN, 15)); // TODO nice fonts
         off.addActionListener(new offButtonListener());
         sendMessage.addActionListener(new sendMessageButtonListener());
         newFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        newFrame.setSize(470, 300);
+        newFrame.setSize(850, 300);
         newFrame.setLocationRelativeTo(null);
+
+        messageBox.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+                    String mes = messageBox.getText();
+                    GregorianCalendar d = new GregorianCalendar();
+                    chatBox.append(d.getTime() + "<" + username + ">:  " + mes + "\n"); //date and time
+                    messageBox.setText("");
+                }
+            }
+        });
     }
 
     class sendMessageButtonListener implements ActionListener {
@@ -208,6 +216,7 @@ public class Chatbox {
                 }
             }
         }
+
     }
 
     class offButtonListener implements ActionListener {
