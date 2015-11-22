@@ -1,12 +1,12 @@
-package model;
 
-import view.Chatbox;
 
 import javax.swing.*;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.GregorianCalendar;
 
 public class MessageReciever extends Thread {
     Socket socket;
@@ -18,11 +18,18 @@ public class MessageReciever extends Thread {
     Chatbox chatn;
     JTextArea n;
     String nick;
+    String LastCommand= " ";
+    
+    public void LastCommand(String ls){
+    	LastCommand=ls;
+    }
 
 
     public MessageReciever(Socket socket2, Chatbox chatBox, String friendName) {
         t = new Thread(this);
         this.nick = friendName;
+        if (chatBox==null) System.out.println("CLASS CHATBOX NULL");
+        if (chatBox.chatBox==null) System.out.println("JTEXTFIELD CHATBOX NULL");
         chatn = chatBox;
         n = chatn.chatBox;
         if (socket2 != null)
@@ -63,24 +70,30 @@ public class MessageReciever extends Thread {
                 if (command != null) {
                     int a = prot.whichone(command);
                     if (a == 1) {
+                    	LastCommand(command);
                         String mes = in.readLine();
                         connect.recieve(mes);
                         if (n == null) System.out.println("HELLO");
-                        n.append("< " + nick + " >:  " + mes + "\n");
+                        GregorianCalendar d = new GregorianCalendar();
+                        n.append(d.getTime()+"< " + nick + " >:  " + mes + "\n");
                     } else if (a == 2) {
+                       /* chatn.closeAll();
+                        chatn.preDisplay();*/
+                    	LastCommand(command);
                         System.out.println("Disconnect");
-                        chatn.closeAll();
-                        chatn.preDisplay();
                         connect.disconnect();
                         socket = null;
                         isNeed = false;
                     } else if (a == 3) {
-                        System.out.println("Accepted");
+                    	LastCommand(command);
+                        System.out.println("Got accepted");
                     } // accepted;
                     else if (a == 4) {
+                    	LastCommand(command);
                         System.out.println("Rejected");
                     } // rejected
                     else if (a == 5) {
+                    	LastCommand(command);
                         System.out.println("Busy");
                     } else if (a == 0) {
                         System.out.println("UnknownCommand");

@@ -1,4 +1,4 @@
-package model;
+
 
 import java.io.*;
 import java.net.Socket;
@@ -38,6 +38,7 @@ public class Connection extends Thread {
     }
 
     public void Accepted() {
+    	System.out.println("Send Acccept");
         out.println("Accepted");
     }
 

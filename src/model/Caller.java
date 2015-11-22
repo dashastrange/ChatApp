@@ -1,4 +1,3 @@
-package model;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -48,7 +47,7 @@ public class Caller {
         }
         if (FriendName.startsWith("Bus")) {
 
-            System.out.println("false");
+            System.out.println("BUSYYYYYYYYYYYYY");
             return null;
         }
         try {
