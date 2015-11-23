@@ -3,8 +3,11 @@
 import javax.swing.*;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.GregorianCalendar;
 
@@ -19,6 +22,7 @@ public class MessageReciever extends Thread {
     JTextArea n;
     String nick;
     String LastCommand= " ";
+
     
     public void LastCommand(String ls){
     	LastCommand=ls;
@@ -41,6 +45,8 @@ public class MessageReciever extends Thread {
         }
         connect = new Connection(socket);
         t.start();
+
+       
     }
 
     public MessageReciever(Socket socket2, JTextArea chatBox, String friendName) {
@@ -57,6 +63,7 @@ public class MessageReciever extends Thread {
         }
         connect = new Connection(socket);
         t.start();
+    
     }
 
 
@@ -76,6 +83,7 @@ public class MessageReciever extends Thread {
                         if (n == null) System.out.println("HELLO");
                         GregorianCalendar d = new GregorianCalendar();
                         n.append(d.getTime()+"< " + nick + " >:  " + mes + "\n");
+                      
                     } else if (a == 2) {
                        /* chatn.closeAll();
                         chatn.preDisplay();*/

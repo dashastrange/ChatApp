@@ -9,6 +9,7 @@ public class Messeger {
     PrintWriter out;
     boolean sended = false;
 
+
     Messeger(Socket s) {
         if (s != null)
             this.s = s;

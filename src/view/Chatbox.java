@@ -2,14 +2,17 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.GregorianCalendar;
 
 public class Chatbox {
-	Chatbox mainGUI;
 	JFrame newFrame = new JFrame("Chat v0.1");
+	Chatbox mainGUI;
 	JButton sendMessage;
 	JButton off;
 	JTextArea messageBox;
@@ -25,6 +28,7 @@ public class Chatbox {
 	Caller call;
 	public int ch;
 	public MessageReciever mr;
+
 	
 	public void ChatBox(){
 		
@@ -41,16 +45,20 @@ public class Chatbox {
 	}
 
 	public void closeAll() {
+		
 		try {
 			newFrame.setVisible(false);
+			
 		} catch (Exception e) {
+			System.out.println("NICHT");
 		}
-
+		
 		try {
+			
 			preFrame.setVisible(false);
 		} catch (Exception e) {
 		}
-
+		
 		try {
 			f.setVisible(false);
 		} catch (Exception e) {
@@ -66,13 +74,14 @@ public class Chatbox {
 	}
 
 	public void incomingConnection() {
+		
 		JFrame in_call = new JFrame("Incoming connection");
 		JButton no = new JButton("Reject");
 		JButton yes = new JButton("Acccept");
 		JLabel call = new JLabel(
 				"Someone wants to talk! What do you want to do?");
 
-		in_call.setVisible(true);
+		
 		in_call.setSize(new Dimension(300, 90));
 		in_call.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		in_call.setLocationRelativeTo(null);
@@ -86,6 +95,7 @@ public class Chatbox {
 		no.setForeground(Color.red);
 		yes.setForeground(Color.GREEN);
 		ch = 0;
+		in_call.setVisible(true);
 		no.addActionListener(e -> {
 			ch = 2;
 			in_call.setVisible(false);
@@ -98,7 +108,10 @@ public class Chatbox {
 	}
 
 	public void preDisplay() {
+		try{
 		newFrame.setVisible(false);
+		}
+		catch(Exception e){};
 		preFrame = new JFrame("Choose your username!(chat v0.2");
 		preFrame.setLocationRelativeTo(null);
 		usernameChooser = new JTextField(30);
@@ -142,7 +155,7 @@ public class Chatbox {
 	
 	public void error(){
 		JFrame err=new JFrame("ERROR");
-		//err.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		err.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		JLabel errl = new JLabel("Canceled");
 		err.add(errl);
 		err.setLocationRelativeTo(null);
@@ -203,17 +216,20 @@ public class Chatbox {
 
 	class sendMessageButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
+			System.out.println("SEND BUTTON WAS PRESSED");
 			if (messageBox.getText().length() < 1) {
 				// do nothing
 			} else if (messageBox.getText().equals(".clear")) {
 				chatBox.setText("Cleared all messages\n");
 				messageBox.setText("");
 			} else {
+				System.out.println("SEND BUTTON WAS PRESSED 2");
 				GregorianCalendar d = new GregorianCalendar();
 				String mes = messageBox.getText();
 				System.out.println(mes);
 				chatBox.append(d.getTime() + "<" + username + ">:  " + mes
 						+ "\n"); // date and time
+
 				messageBox.setText("");
 				if (mr == null)
 					System.out.println("mr nil");
@@ -233,8 +249,10 @@ public class Chatbox {
 
 	class offButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
+			//newFrame = new JFrame("Chat v0.1");
 			closeAll();
 			preDisplay();
+			
 			mr.connect.disconnect();
 			mr=null;
 			
@@ -251,6 +269,7 @@ public class Chatbox {
 
 	class enterServerButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
+		
             username = usernameChooser.getText();
             ip = IPFriend.getText();
             if (username.length() < 1) {
@@ -286,6 +305,7 @@ public class Chatbox {
                 }
                 System.out.println("b="+b);
                 if (b==1){
+                	
                 preFrame.setVisible(false);
                 display();
                 mr.n=chatBox;}
