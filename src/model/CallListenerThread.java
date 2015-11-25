@@ -1,3 +1,6 @@
+package model;
+
+import view.Chat_Box;
 
 import java.net.Socket;
 
@@ -7,9 +10,9 @@ public class CallListenerThread extends Thread {
 	int a = 0;
 	boolean isSearch = true;
 	Socket socket1 = null;
-	Chatbox notmy;
+	Chat_Box notmy;
 
-	CallListenerThread(Chatbox x) {
+	CallListenerThread(Chat_Box x) {
 		notmy = x;
 		t = new Thread(this);
 		cl = new CallListener();
