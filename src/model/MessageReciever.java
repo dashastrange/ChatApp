@@ -17,9 +17,9 @@ public class MessageReciever extends Thread {
     Protocol prot = new Protocol();
     Thread t;
     Chatbox chatn;
-    JTextArea n;
+    public JTextArea n;
     String nick;
-    String LastCommand = " ";
+    public String LastCommand = " ";
 
 
     public void LastCommand(String ls) {
