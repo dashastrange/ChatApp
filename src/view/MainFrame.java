@@ -98,6 +98,7 @@ public class MainFrame {
         send.addActionListener(new sendMessageButtonListener());
         apply.addActionListener(new enterNickButtonListener());
         connect.addActionListener(new enterServerButtonListener());
+        list.addActionListener(new listButtonListener());
 
         mes.addKeyListener(new KeyAdapter() {
             @Override
@@ -117,7 +118,7 @@ public class MainFrame {
 
     public void error() {
         JFrame err = new JFrame("ERROR");
-        err.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        err.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         JLabel errl = new JLabel("Canceled");
         err.add(errl);
         err.setLocationRelativeTo(null);
@@ -227,6 +228,12 @@ public class MainFrame {
         }
     }
 
+    class listButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            show_list();
+        }
+    }
+
     public void closeAll() {
 
         try {
@@ -290,5 +297,25 @@ public class MainFrame {
         });
     }
 
+    public void show_list() {
+        Object[] headers = {"Name", "Ip"};
+        Object[][] data = {
+                {"John", "1112221"},
+                {"Ivan", "2221111"},
+                {"George", "3334444"},
+        };
+
+        JTable jTabPeople;
+
+        JFrame jfrm = new JFrame("Contacts");
+        jfrm.getContentPane().setLayout(new BorderLayout());
+        jfrm.setSize(new Dimension(200 ,100));
+        jfrm.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        jfrm.setLocationRelativeTo(mainf);
+        jTabPeople = new JTable(data, headers);
+        jfrm.add(new JScrollPane(jTabPeople));
+        jfrm.getContentPane().add(jTabPeople);
+        jfrm.setVisible(true);
+    }
 
 }
