@@ -1,6 +1,6 @@
 package model;
 
-import view.Chatbox;
+import view.MainFrame;
 
 import javax.swing.*;
 import java.io.BufferedReader;
@@ -16,7 +16,7 @@ public class MessageReciever extends Thread {
     boolean isNeed = true;
     Protocol prot = new Protocol();
     Thread t;
-    Chatbox chatn;
+    MainFrame chatn;
     public JTextArea n;
     String nick;
     public String LastCommand = " ";
@@ -27,13 +27,13 @@ public class MessageReciever extends Thread {
     }
 
 
-    public MessageReciever(Socket socket2, Chatbox chatBox, String friendName) {
+    public MessageReciever(Socket socket2, MainFrame chatBox, String friendName) {
         t = new Thread(this);
         this.nick = friendName;
         if (chatBox == null) System.out.println("CLASS CHATBOX NULL");
-        if (chatBox.chatBox == null) System.out.println("JTEXTFIELD CHATBOX NULL");
+        if (chatBox.chat_box == null) System.out.println("JTEXTFIELD CHATBOX NULL");
         chatn = chatBox;
-        n = chatn.chatBox;
+        n = chatn.chat_box;
         if (socket2 != null)
             this.socket = socket2;
         try {

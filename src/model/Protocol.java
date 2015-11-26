@@ -1,4 +1,5 @@
 package model;
+
 public class Protocol {
 
     public int whichone(String s) {

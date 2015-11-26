@@ -1,6 +1,6 @@
 package model;
 
-import view.Chatbox;
+import view.MainFrame;
 
 import java.net.Socket;
 
@@ -10,9 +10,10 @@ public class CallListenerThread extends Thread {
 	int a = 0;
 	boolean isSearch = true;
 	Socket socket1 = null;
-	Chatbox notmy;
+	MainFrame notmy;
+	String username = "Unnamed";
 
-	CallListenerThread(Chatbox x) {
+	CallListenerThread(MainFrame x) {
 		notmy = x;
 		t = new Thread(this);
 		cl = new CallListener();
