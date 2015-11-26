@@ -189,12 +189,10 @@ public class MainFrame {
             } else if (ip.length() < 1) {
                 System.err.println("No!");
             } else {
-                InetAddress addr = null;
-                try {
-                    addr = InetAddress.getByName(ip);
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
-                }
+                 String addr = null;
+
+                    addr = ip;
+
                 call = new Caller(addr, 28411, username);
                 try {
                     mr = new MessageReciever(call.Connector(), chat_box,
