@@ -1,4 +1,4 @@
-package model;
+
 
 import java.io.*;
 import java.net.InetAddress;
@@ -9,13 +9,13 @@ public class Caller {
     public String FriendName;
     public boolean isOK = true;
     public int port = 28411;
-    InetAddress ip;
+    String ip;
     Socket socket;
     BufferedReader in;
     PrintWriter out;
     String str;
 
-    public Caller(InetAddress ip, int port, String YourName) {
+    public Caller(String ip, int port, String YourName) {
         this.port = port;
         this.ip = ip;
         this.YourName = YourName;
@@ -25,7 +25,7 @@ public class Caller {
 
     public Socket Connector() throws IOException {
         try {
-            socket = new Socket("127.1.0.1", port);
+            socket = new Socket(ip, port);
         } catch (IOException e1) {
             System.out.println("HELLO");
         }
