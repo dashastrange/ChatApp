@@ -5,12 +5,9 @@ import model.MessageReciever;
 import model.ServerConnection;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.GregorianCalendar;
 import java.util.Vector;
@@ -38,10 +35,10 @@ public class Chatbox {
 
     public void ChatBox() {
     }
-
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(MyLookAndFeel.class.getCanonicalName());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -129,6 +126,8 @@ public class Chatbox {
         JButton list = new JButton("Contacts");
         JPanel prePanel = new JPanel(new GridBagLayout());
 
+        prePanel.setBackground(new Color(149, 188, 214));
+
         GridBagConstraints preRight = new GridBagConstraints();
         preRight.anchor = GridBagConstraints.EAST;
         GridBagConstraints preLeft = new GridBagConstraints();
@@ -169,7 +168,7 @@ public class Chatbox {
     }
 
     public void show_list() {
-    	if (server!=null) {
+        if (server != null) {
             Object[] headers = {"Name", "Ip"};
             String[] names = server.getAllNicks();
 
