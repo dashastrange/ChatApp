@@ -1,8 +1,7 @@
-package view;
-import model.Caller;
-import model.MessageReciever;
+
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +11,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.GregorianCalendar;
+import java.util.Vector;
 
 public class Chatbox {
     JFrame newFrame = new JFrame("Chat v0.1");
@@ -31,10 +31,10 @@ public class Chatbox {
     Caller call;
     public int ch;
     public MessageReciever mr;
+    ServerConnection server;
 
 
     public void ChatBox() {
-
     }
 
     public static void main(String[] args) {
@@ -167,13 +167,27 @@ public class Chatbox {
     }
 
     public void show_list() {
+    	if (server!=null){
         Object[] headers = {"Name", "Ip"};
-        Object[][] data = {
-                {"John", "1112221"},
-                {"Ivan", "2221111"},
-                {"George", "3334444"},
-        };
-
+        String[] names=server.getAllNicks();
+        
+        
+        Vector<String> namesOnline = new Vector(); ///////////////////Ã¿——»¬ — Õ» ¿Ã»
+        for (int i=0;i<names.length;i++){
+        	if (server.isNickOnline(names[i]))
+        		namesOnline.add(names[i]);
+        }
+        
+        
+        Vector<String> ipUsers = new Vector(); ////////////////////////Ã¿——»¬ Ò ËÔ ‡‰ÂÒÒ‡ÏË
+        for (int i=0;i<namesOnline.size();i++){
+        	ipUsers.add(server.getIpForNick(namesOnline.get(i)));
+        }
+        Object[][] data = new Object[namesOnline.size()][2] ;
+        for (int i=0;i<namesOnline.size();i++){
+        	data[i][0]=namesOnline.get(i);
+        	data[i][1]=ipUsers.get(i);
+        }
         JTable jTabPeople;
 
         JFrame jfrm = new JFrame("Contacts");
@@ -185,6 +199,7 @@ public class Chatbox {
         jfrm.add(new JScrollPane(jTabPeople));
         jfrm.getContentPane().add(jTabPeople);
         jfrm.setVisible(true);
+    	}
     }
 
     public void error() {
@@ -297,6 +312,11 @@ public class Chatbox {
     class enterNickButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             username = usernameChooser.getText();
+        	server=new ServerConnection();
+        	server.setServerAddress("jdbc:mysql://files.litvinov.in.ua/chatapp_server");
+        	server.connect();
+        	server.setLocalNick(username);
+        	server.goOnline();
         }
 
     }
