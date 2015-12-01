@@ -5,6 +5,7 @@ import model.MessageReciever;
 import model.ServerConnection;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -168,7 +169,7 @@ public class Chatbox {
     }
 
     public void show_list() {
-        if (server != null) {
+    	if (server!=null) {
             Object[] headers = {"Name", "Ip"};
             String[] names = server.getAllNicks();
 
