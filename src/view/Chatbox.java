@@ -1,6 +1,8 @@
 package view;
+
 import model.Caller;
 import model.MessageReciever;
+import model.ServerConnection;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,9 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.GregorianCalendar;
+import java.util.Vector;
 
 public class Chatbox {
     JFrame newFrame = new JFrame("Chat v0.1");
@@ -31,15 +32,15 @@ public class Chatbox {
     Caller call;
     public int ch;
     public MessageReciever mr;
+    ServerConnection server;
 
 
     public void ChatBox() {
-
     }
 
     public static void main(String[] args) {
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            UIManager.setLookAndFeel(MyLookAndFeel.class.getCanonicalName());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -167,24 +168,39 @@ public class Chatbox {
     }
 
     public void show_list() {
-        Object[] headers = {"Name", "Ip"};
-        Object[][] data = {
-                {"John", "1112221"},
-                {"Ivan", "2221111"},
-                {"George", "3334444"},
-        };
+        if (server != null) {
+            Object[] headers = {"Name", "Ip"};
+            String[] names = server.getAllNicks();
 
-        JTable jTabPeople;
 
-        JFrame jfrm = new JFrame("Contacts");
-        jfrm.getContentPane().setLayout(new BorderLayout());
-        jfrm.setSize(new Dimension(200, 100));
-        jfrm.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        jfrm.setLocationRelativeTo(preFrame);
-        jTabPeople = new JTable(data, headers);
-        jfrm.add(new JScrollPane(jTabPeople));
-        jfrm.getContentPane().add(jTabPeople);
-        jfrm.setVisible(true);
+            Vector<String> namesOnline = new Vector(); //names
+            for (int i = 0; i < names.length; i++) {
+                if (server.isNickOnline(names[i]))
+                    namesOnline.add(names[i]);
+            }
+
+
+            Vector<String> ipUsers = new Vector(); //ip
+            for (int i = 0; i < namesOnline.size(); i++) {
+                ipUsers.add(server.getIpForNick(namesOnline.get(i)));
+            }
+            Object[][] data = new Object[namesOnline.size()][2];
+            for (int i = 0; i < namesOnline.size(); i++) {
+                data[i][0] = namesOnline.get(i);
+                data[i][1] = ipUsers.get(i);
+            }
+            JTable jTabPeople;
+
+            JFrame jfrm = new JFrame("Contacts");
+            jfrm.getContentPane().setLayout(new BorderLayout());
+            jfrm.setSize(new Dimension(200, 100));
+            jfrm.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            jfrm.setLocationRelativeTo(preFrame);
+            jTabPeople = new JTable(data, headers);
+            jfrm.add(new JScrollPane(jTabPeople));
+            jfrm.getContentPane().add(jTabPeople);
+            jfrm.setVisible(true);
+        }
     }
 
     public void error() {
@@ -233,19 +249,21 @@ public class Chatbox {
         newFrame.setSize(850, 300);
         newFrame.setLocationRelativeTo(null);
 
-        messageBox.addKeyListener(new KeyAdapter() {
+        /*messageBox.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 super.keyPressed(e);
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    String mes = messageBox.getText();
+                if (messageBox.getText().length() > 1) {
                     GregorianCalendar d = new GregorianCalendar();
+                    String mes = messageBox.getText();
+                    System.out.println(mes);
                     chatBox.append(d.getTime() + "<" + username + ">:  " + mes
                             + "\n"); // date and time
+
                     messageBox.setText("");
                 }
             }
-        });
+        });*/ //TODO fix it
     }
 
     class sendMessageButtonListener implements ActionListener {
@@ -297,6 +315,11 @@ public class Chatbox {
     class enterNickButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             username = usernameChooser.getText();
+            server = new ServerConnection();
+            server.setServerAddress("jdbc:mysql://files.litvinov.in.ua/chatapp_server");
+            server.connect();
+            server.setLocalNick(username);
+            server.goOnline();
         }
 
     }
@@ -311,9 +334,9 @@ public class Chatbox {
             } else if (ip.length() < 1) {
                 System.err.println("No!");
             } else {
-                 String addr = null;
+                String addr = null;
 
-                    addr = ip;
+                addr = ip;
 
                 call = new Caller(addr, 28411, username);
                 try {

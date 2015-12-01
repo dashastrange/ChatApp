@@ -2,6 +2,8 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Registration {
     public static void main(String[] args) {
@@ -49,8 +51,14 @@ public class Registration {
         registr.add(log, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.9, GridBagConstraints.SOUTH,
                 GridBagConstraints.HORIZONTAL, new Insets(2, 2, 2, 2), 0, 0));
 
-
         registr.pack();
+
+        new_name_field.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
 
     }
 }
