@@ -1,14 +1,14 @@
-package view;
 
-import model.Caller;
-import model.MessageReciever;
-import model.ServerConnection;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
@@ -169,10 +169,23 @@ public class Chatbox {
 
     public void show_list() {
         if (server != null) {
+
+            PrintWriter pw = null;
+            File fn=new File("friends.txt");
+            if (!fn.exists()){
+            	try {
+					fn.createNewFile();
+				} catch (IOException e) {
+				}
+            }
+            try {
+				pw=new PrintWriter(fn);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             Object[] headers = {"Name", "Ip"};
             String[] names = server.getAllNicks();
-
-
             Vector<String> namesOnline = new Vector(); //names
             for (int i = 0; i < names.length; i++) {
                 if (server.isNickOnline(names[i]))
@@ -184,11 +197,19 @@ public class Chatbox {
             for (int i = 0; i < namesOnline.size(); i++) {
                 ipUsers.add(server.getIpForNick(namesOnline.get(i)));
             }
+            
             Object[][] data = new Object[namesOnline.size()][2];
             for (int i = 0; i < namesOnline.size(); i++) {
                 data[i][0] = namesOnline.get(i);
                 data[i][1] = ipUsers.get(i);
             }
+           
+            for (int i=0;i <namesOnline.size();i++){
+            	pw.println(namesOnline.get(i)+"   "+ipUsers.get(i));
+            	pw.flush();
+            }
+            
+            
             JTable jTabPeople;
 
             JFrame jfrm = new JFrame("Contacts");
@@ -316,10 +337,15 @@ public class Chatbox {
         public void actionPerformed(ActionEvent event) {
             username = usernameChooser.getText();
             server = new ServerConnection();
+            try{
             server.setServerAddress("jdbc:mysql://files.litvinov.in.ua/chatapp_server");
             server.connect();
             server.setLocalNick(username);
             server.goOnline();
+            }
+            catch (Exception e){
+            	System.out.println("Can't connect to the server now");
+            }
         }
 
     }

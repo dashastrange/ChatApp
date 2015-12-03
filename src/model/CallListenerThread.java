@@ -1,6 +1,4 @@
-package model;
 
-import view.Chatbox;
 
 
 import java.net.Socket;
@@ -61,6 +59,13 @@ public class CallListenerThread extends Thread {
 					notmy.mr.connect.Rejected();
 					notmy.mr = null;
 				}
+			}
+			else {
+				notmy.mr = new MessageReciever(cl.socket, notmy,
+						cl.FriendName);
+				notmy.mr.connect.out.println("Busy");
+				notmy.mr.connect.out.flush();
+				notmy.mr = null;
 			}
 		}
 

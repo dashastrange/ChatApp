@@ -1,4 +1,4 @@
-package view;
+
 
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
